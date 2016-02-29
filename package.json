@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "./node_modules/.bin/tsc",
+    "prestart": "./node_modules/.bin/typings i && ./node_modules/.bin/tsc",
     "start": "node out/index.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme",
   "dependencies": {
+    "express": "4.13.4",
     "typescript": "1.8.2",
     "typings": "0.6.8"
   }
