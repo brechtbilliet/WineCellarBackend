@@ -3,7 +3,7 @@ import {Post, Delete, Put, Get} from "controllers.ts/decorator/Methods"
 import {Res, Req} from "controllers.ts/decorator/Params";
 import {Request, Response} from "express";
 import {ObjectID} from "mongodb";
-import {MongoConnector} from "../MongoConnector";
+import {Wine} from "../schema/WineSchema";
 @JsonController("/api/wines")
 export class WinesController {
     constructor() {
@@ -11,19 +11,19 @@ export class WinesController {
     }
 
     @Get("/")
-    public get(@Req() req: Request, @Res() res: Response) {
-        MongoConnector.getDb().collection("wines").find({}).toArray((error: any, docs: any) => {
+    public get(@Req() req: Request, @Res() res: Response): void {
+        Wine.find({}, (error: any, wines: any) => {
             if (error) {
                 res.send(error);
                 return;
             }
-            res.send(docs);
+            res.send(wines);
         });
     }
 
     @Get("/:id")
-    public getById(@Req()req: Request, @Res() res: Response) {
-        MongoConnector.getDb().collection("wines").find({_id: new ObjectID(req.params.id)}).toArray((error: any, docs: any) => {
+    public getById(@Req()req: Request, @Res() res: Response): void {
+        Wine.find({_id: new ObjectID(req.params.id)}, (error: any, docs: any) => {
             if (error) {
                 res.send(error);
                 return;
@@ -33,30 +33,30 @@ export class WinesController {
     }
 
     @Post("/")
-    public post(@Req()req: Request, @Res() res: Response) {
-        MongoConnector.getDb().collection("wines").insertOne(req.body, (error: any) => {
+    public post(@Req()req: Request, @Res() res: Response): void {
+        new Wine(req.body).save((error: any) => {
             if (error) {
                 res.send(error);
                 return;
             }
             res.end();
-        })
+        });
     }
 
     @Put("/:id")
-    public put(@Req()req: Request, @Res() res: Response) {
-        MongoConnector.getDb().collection("wines").updateOne({_id: new ObjectID(req.params.id)}, req.body, (error: any) => {
+    public put(@Req()req: Request, @Res() res: Response): void {
+        Wine.findOneAndUpdate({_id: new ObjectID(req.params.id)}, req.body, (error: any) => {
             if (error) {
                 res.send(error);
                 return;
             }
             res.end();
-        })
+        });
     }
 
     @Delete("/:id")
-    public delete(@Req()req: Request, res: Response) {
-        MongoConnector.getDb().collection("wines").deleteOne({_id: new ObjectID(req.params.id)}, (error: any) => {
+    public delete(@Req()req: Request, res: Response): void {
+        Wine.remove({_id: new ObjectID(req.params.id)}, (error: any) => {
             res.end();
         });
     }
