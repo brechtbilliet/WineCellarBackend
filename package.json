@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/brechtbilliet/WineCellarBackend/issues"
   },
-  "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme"
+  "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme",
+  "devDependencies": {
+    "typescript": "1.8.2",
+    "typings": "0.6.8"
+  }
 }
