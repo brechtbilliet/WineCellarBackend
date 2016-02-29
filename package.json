@@ -20,6 +20,7 @@
   "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme",
   "dependencies": {
     "body-parser": "1.15.0",
+    "controllers.ts": "0.3.0",
     "express": "4.13.4",
     "mongodb": "2.1.7",
     "typescript": "1.8.2",
