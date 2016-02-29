@@ -1,0 +1,21 @@
+{
+  "name": "winecellarbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "tsc",
+    "start": "node out/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brechtbilliet/WineCellarBackend.git"
+  },
+  "keywords": [],
+  "author": "Brecht Billiet <billietbrecht@gmail.com> (http://brecht.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brechtbilliet/WineCellarBackend/issues"
+  },
+  "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme"
+}
