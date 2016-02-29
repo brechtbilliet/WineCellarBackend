@@ -7,6 +7,8 @@ MongoClient.connect(process.env.MONGOLAB_URI, (err: any, db: Db) => {
     console.log("started mongodb with MONGOLAB_URI: " + process.env.MONGOLAB_URI);
     let app: Express = express();
     let port: number = process.env.PORT || 3000;
+
+    console.log(err);
     app.listen(port, () => {
         console.log(`Listening on port ${port}`);
     });
