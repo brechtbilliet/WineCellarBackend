@@ -20,6 +20,7 @@
   "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme",
   "dependencies": {
     "express": "4.13.4",
+    "mongodb": "2.1.7",
     "typescript": "1.8.2",
     "typings": "0.6.8"
   }
