@@ -7,6 +7,7 @@
     "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
     "mime": "github:DefinitelyTyped/DefinitelyTyped/mime/mime.d.ts#cb5206a8ac1c9a3ddfd126f5ecea6729b2361452",
     "mongodb": "github:DefinitelyTyped/DefinitelyTyped/mongodb/mongodb.d.ts#3cf5221c92ba0cef413449fb4fb2fd1ffbfbcfbf",
+    "mongoose": "github:DefinitelyTyped/DefinitelyTyped/mongoose/mongoose.d.ts#cebde64b3a1d63d07ee7c7dbc49b631ce220d027",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#48c1e3c1d6baefa4f1a126f188c27c4fefd36bff",
     "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts#0fa4e9e61385646ea6a4cba2aef357353d2ce77f"
   }

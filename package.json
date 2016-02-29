@@ -23,6 +23,7 @@
     "controllers.ts": "0.3.0",
     "express": "4.13.4",
     "mongodb": "2.1.7",
+    "mongoose": "4.4.5",
     "typescript": "1.8.2",
     "typings": "0.6.8"
   }
