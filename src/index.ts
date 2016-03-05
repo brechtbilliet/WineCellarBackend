@@ -1,10 +1,12 @@
 import * as mongoose from "mongoose";
 import * as express from "express";
+import * as cors from "cors";
 import {Express} from "express";
 import * as bodyParser from "body-parser";
 import {registerActionsInExpressApp} from "controllers.ts/Factory";
 let app: Express = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 mongoose.connect(process.env.MONGOLAB_URI)
 let port: number = process.env.PORT || 3000;

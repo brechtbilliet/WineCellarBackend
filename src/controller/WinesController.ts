@@ -4,6 +4,8 @@ import {Res, Req} from "controllers.ts/decorator/Params";
 import {Request, Response} from "express";
 import {ObjectID} from "mongodb";
 import {Wine} from "../schema/WineSchema";
+var jwt: any = require("jsonwebtoken");
+
 @JsonController("/api/wines")
 export class WinesController {
     constructor() {
@@ -12,7 +14,8 @@ export class WinesController {
 
     @Get("/")
     public get(@Req() req: Request, @Res() res: Response): void {
-        Wine.find({}, (error: any, wines: any) => {
+        let userId: string = this.handleAuth(req, res);
+        Wine.find({userId: new ObjectID(userId)}, (error: any, wines: any) => {
             if (error) {
                 res.send(error);
                 return;
@@ -23,7 +26,8 @@ export class WinesController {
 
     @Get("/:id")
     public getById(@Req()req: Request, @Res() res: Response): void {
-        Wine.find({_id: new ObjectID(req.params.id)}, (error: any, docs: any) => {
+        let userId: string = this.handleAuth(req, res);
+        Wine.find({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, (error: any, docs: any) => {
             if (error) {
                 res.send(error);
                 return;
@@ -34,6 +38,8 @@ export class WinesController {
 
     @Post("/")
     public post(@Req()req: Request, @Res() res: Response): void {
+        let userId: string = this.handleAuth(req, res);
+        req.body.userId = userId;
         new Wine(req.body).save((error: any) => {
             if (error) {
                 res.send(error);
@@ -45,7 +51,8 @@ export class WinesController {
 
     @Put("/:id")
     public put(@Req()req: Request, @Res() res: Response): void {
-        Wine.findOneAndUpdate({_id: new ObjectID(req.params.id)}, req.body, (error: any) => {
+        let userId: string = this.handleAuth(req, res);
+        Wine.findOneAndUpdate({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, req.body, (error: any) => {
             if (error) {
                 res.send(error);
                 return;
@@ -56,8 +63,18 @@ export class WinesController {
 
     @Delete("/:id")
     public delete(@Req()req: Request, res: Response): void {
-        Wine.remove({_id: new ObjectID(req.params.id)}, (error: any) => {
+        let userId: string = this.handleAuth(req, res);
+        Wine.remove({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, (error: any) => {
             res.end();
         });
+    }
+
+    private handleAuth(req: Request, res: Response): string {
+        let token: string = req.header("Authorization").replace("Bearer ", "");
+        if (!jwt.verify(token, "secret")) {
+            res.status(400).send({error: "UNAUTHORIZED"});
+            return;
+        }
+        return jwt.decode(token, "secret")._id;
     }
 }
