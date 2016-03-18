@@ -14,7 +14,7 @@ export class AuthenticationController {
     @Post("/register")
     public register(@Req()req: Request, @Res() res: Response): void {
         console.log(req.body);
-        new User(req.body).save((error: any) => {
+        new User(req.body).save((error: any, user: IUserModel) => {
             if (error) {
                 res.status(500).send({error: "something has gone horribly wrong"});
                 return;
@@ -22,7 +22,8 @@ export class AuthenticationController {
             let token: string = jwt.sign({
                 fistName: req.body.firstName,
                 lastName: req.body.lastName,
-                login: req.body.login
+                login: req.body.login,
+                _id: user._id
             }, "secret");
             res.send({token: token, login: req.body.login, firstName: req.body.firstName, lastName: req.body.lastName});
         });

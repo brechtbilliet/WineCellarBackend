@@ -39,6 +39,7 @@ export class WinesController {
     @Post("/")
     public post(@Req()req: Request, @Res() res: Response): void {
         let userId: string = this.handleAuth(req, res);
+        console.log(userId);
         req.body.userId = userId;
         new Wine(req.body).save((error: any, response: any) => {
             if (error) {
