@@ -40,32 +40,36 @@ export class WinesController {
     public post(@Req()req: Request, @Res() res: Response): void {
         let userId: string = this.handleAuth(req, res);
         req.body.userId = userId;
-        new Wine(req.body).save((error: any) => {
+        new Wine(req.body).save((error: any, response: any) => {
             if (error) {
                 res.send(error);
                 return;
             }
-            res.end();
+            res.send(response);
         });
     }
 
     @Put("/:id")
     public put(@Req()req: Request, @Res() res: Response): void {
         let userId: string = this.handleAuth(req, res);
-        Wine.findOneAndUpdate({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, req.body, (error: any) => {
+        Wine.findOneAndUpdate({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, req.body, (error: any, response: any) => {
             if (error) {
                 res.send(error);
                 return;
             }
-            res.end();
+            res.send(response);
         });
     }
 
     @Delete("/:id")
-    public delete(@Req()req: Request, res: Response): void {
+    public delete(@Req()req: Request, @Res() res: Response): void {
         let userId: string = this.handleAuth(req, res);
         Wine.remove({_id: new ObjectID(req.params.id), userId: new ObjectID(userId)}, (error: any) => {
-            res.end();
+            if (error) {
+                res.send(error);
+                return;
+            }
+            res.sendStatus(200)
         });
     }
 

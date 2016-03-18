@@ -5,8 +5,11 @@ var wineSchema: Schema = new mongoose.Schema({
     name: {type: String, required: true},
     description: String,
     region: String,
-    userId: String
-
+    userId: String,
+    myRating: Number,
+    inStock: Number,
+    price: Number,
+    image: String
 })
 export var Wine: Model<IWineModel> = mongoose.model<IWineModel>("Wine", wineSchema);
 interface IWineModel extends IWine, mongoose.Document {
@@ -16,4 +19,8 @@ interface IWine {
     description: string;
     region: string;
     userId: string;
+    myRating: Number;
+    inStock: Number;
+    price: Number;
+    image: String;
 }
