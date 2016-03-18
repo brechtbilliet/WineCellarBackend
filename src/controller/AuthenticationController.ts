@@ -24,7 +24,7 @@ export class AuthenticationController {
                 lastName: req.body.lastName,
                 login: req.body.login
             }, "secret");
-            res.send({token: token});
+            res.send({token: token, login: req.body.login, firstName: req.body.firstName, lastName: req.body.lastName});
         });
     }
 
