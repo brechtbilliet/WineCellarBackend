@@ -8,7 +8,7 @@ import {getUserIdFromToken, validate} from "./auth";
 export let clientIdsMap = new Map<string, Array<string>>();
 let app = express();
 app.use(bodyParser.json());
-app.use(cors({origin: "http://winecellar.surge.sh/", credentials: true}));
+app.use(cors({origin: "http://winecellar.surge.sh", credentials: true}));
 let httpInstance = require("http").Server(app);
 export let io = socketIo(httpInstance);
 io.on('connection', function (socket) {
@@ -22,7 +22,7 @@ io.on('connection', function (socket) {
         clientIds.push({clientId: socket.client.id, jwtToken: token});
     }
 });
-io.origins("http://winecellar.surge.sh/");
+io.origins("http://winecellar.surge.sh");
 mongoose.connect(process.env.MONGOLAB_URI)
 let port: number = process.env.PORT || 3000;
 httpInstance.listen(port, () => {
