@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
     });
 });
 io.origins("*:*");
-mongoose.connect("heroku_zz2xndp6:hbqi5o0nefb6095gkl3nc4ccgf@ds047484.mlab.com:47484/heroku_zz2xndp6")
+mongoose.connect(process.env.MONGOLAB_URI)
 let port: number = process.env.PORT || 3000;
 httpInstance.listen(port, () => {
     console.log(`Listening on port ${port}`);
