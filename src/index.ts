@@ -5,7 +5,7 @@ import * as bodyParser from "body-parser";
 import {registerActionsInExpressApp} from "controllers.ts/Factory";
 import * as socketIo from "socket.io";
 import {getUserIdFromToken, validate} from "./auth";
-export let clientIdsMap = new Map<string, Array<SocketIdAndJWTToken>>();
+export let clientIdsMap = new Map<string, Array<string>>();
 let app = express();
 app.use(bodyParser.json());
 app.use(cors({origin: "*", credentials: true}));
@@ -15,31 +15,12 @@ io.on('connection', function (socket) {
     let token = socket.handshake.query["jwttoken"];
     if (validate(token)) {
         let clientIds = clientIdsMap[getUserIdFromToken(token)];
-        if (!clientIds) {
+        if(!clientIds) {
             clientIds = [];
-        }
-        let isJwtTokenKnown = clientIds.filter((clientInfo: SocketIdAndJWTToken) => {
-                return clientInfo.jwtToken === token
-            }).length > 0;
-        if (!isJwtTokenKnown) {
-            clientIds.push({clientId: socket.client.id, jwtToken: token});
             clientIdsMap[getUserIdFromToken(token)] = clientIds;
         }
+        clientIds.push({clientId: socket.client.id, jwtToken: token});
     }
-
-    socket.on('disconnect', function () {
-        for (let userId in clientIdsMap) {
-            let resultingClientIds = clientIdsMap[userId]
-                .filter((clientInfo: {clientId: string, jwtToken: string}) => {
-                    return clientInfo.clientId !== socket.client.id;
-                });
-            if (resultingClientIds.length > 0) {
-                clientIdsMap[userId] = resultingClientIds;
-            } else {
-                delete clientIdsMap[userId];
-            }
-        }
-    });
 });
 io.origins("*:*");
 mongoose.connect(process.env.MONGOLAB_URI)
@@ -49,7 +30,3 @@ httpInstance.listen(port, () => {
 });
 registerActionsInExpressApp(app, [__dirname + "/controller"]);
 
-interface SocketIdAndJWTToken {
-    clientId: string;
-    jwtToken: string;
-}
