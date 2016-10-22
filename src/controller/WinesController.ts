@@ -89,6 +89,9 @@ export class WinesController {
 
     private handleRt(userId: string, req: Request, action: {type: string, payload: any}): void {
         // based on userId only notify correct user
+        if(!clientIdsMap[userId]){
+            return;
+        }
         clientIdsMap[userId]
             .filter((clientInfo: {clientId: string, jwtToken: string}) => {
                 return clientInfo.jwtToken !== getToken(req);
