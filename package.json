@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/brechtbilliet/WineCellarBackend#readme",
   "dependencies": {
-    "bcrypt": "0.8.5",
+    "bcrypt": "^1.0.3",
     "body-parser": "1.15.0",
     "controllers.ts": "0.3.0",
     "cors": "2.7.1",

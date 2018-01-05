@@ -33,6 +33,7 @@ export class AuthenticationController {
     public login(@Req()req: Request, @Res() res: Response): void {
         User.find({login: req.body.login}, (err: any, resp: Array<IUserModel>) => {
             if (err) {
+                console.log(err);
                 res.status(500).send({error: "something has gone horribly wrong"});
                 return;
             }

@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
     }
 });
 io.origins("*:*");
-mongoose.connect(process.env.MONGOLAB_URI)
+mongoose.connect(process.env.MONGOLAB_URI);
 let port: number = process.env.PORT || 3000;
 httpInstance.listen(port, () => {
     console.log(`Listening on port ${port}`);

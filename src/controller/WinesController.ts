@@ -8,13 +8,6 @@ import {io, clientIdsMap} from "../index";
 import {handleAuth, getToken} from "../auth";
 var jwt: any = require("jsonwebtoken");
 
-const DATA_WINES_ADD: string = "DATA_WINES_ADD";
-const DATA_WINES_REMOVE: string = "DATA_WINES_REMOVE";
-const DATA_WINES_UPDATE: string = "DATA_WINES_UPDATE";
-const DATA_WINES_UPDATE_RATE: string = "DATA_WINES_UPDATE_RATE";
-const DATA_WINES_UPDATE_STOCK: string = "DATA_WINES_UPDATE_STOCK";
-const DATA_WINES_ADD_ALL: string = "DATA_WINES_ADD_ALL";
-
 @JsonController("/api/wines")
 export class WinesController {
     constructor() {
@@ -53,7 +46,7 @@ export class WinesController {
                 res.send(error);
                 return;
             }
-            this.handleRt(userId, req, {type: DATA_WINES_ADD, payload: {wine: response}});
+            this.handleRt(userId, req, {type: 'WINES_ADD', payload: {wine: response}});
             res.send(response);
         });
     }
@@ -69,7 +62,7 @@ export class WinesController {
                 res.send(error);
                 return;
             }
-            this.handleRt(userId, req, {type: DATA_WINES_UPDATE, payload: {_id: response._id, wine: req.body}});
+            this.handleRt(userId, req, {type: 'WINES_UPDATE', payload: {id: response._id, wine: req.body}});
             res.send(response);
         });
     }
@@ -82,7 +75,7 @@ export class WinesController {
                 res.send(error);
                 return;
             }
-            this.handleRt(userId, req, {type: DATA_WINES_REMOVE, payload: {_id: req.params.id}});
+            this.handleRt(userId, req, {type: 'WINES_REMOVE', payload: {id: req.params.id}});
             res.sendStatus(200)
         });
     }
